@@ -10,24 +10,19 @@
       false
       (recur (dec n) (not acc)))))
 
-(defn foobar [foo bar]
-  (if (empty? foo)
-    bar
-    (foobar (rest foo) (conj bar (first foo)))))
-
 (defn recursive-reverse [coll]
-  (if (empty? coll)
-    `()
-    (cons (last coll) (recursive-reverse (butlast coll)))))
-
-(defn barfoo [n mul]
-  (if (= 0 n)
-    mul
-    (* n (barfoo (dec n) mul))))
+    (loop [coll coll
+           acc '()]
+           (if (empty? coll)
+                acc
+                (recur (rest coll) (conj acc (first coll))))))
 
 (defn factorial [n]
-  (barfoo n 1)
-  )
+  (loop [n n
+         acc 1]
+    (if (zero? n)
+      acc
+      (recur (dec n) (* acc n)))))
 
 (meditations
   "Recursion ends with a base case"
